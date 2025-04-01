@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/adapter.schema.json",
+  "title": "Adapter Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID (automatically given)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Unique name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description"
+    },
+    "guideline": {
+      "type": "string",
+      "description": "EOSC Guideline ID (options given by the Registry)"
+    },
+    "service": {
+      "type": "array",
+      "description": "EOSC Service ID (options given by the Registry)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Short catch-phrase"
+    },
+    "logo": {
+      "type": "string",
+      "description": "logo (image) – could be a URL or base64-encoded string"
+    },
+    "documentation": {
+      "type": "string",
+      "format": "uri",
+      "description": "Documentation webpage (e.g., read-the-docs page)"
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri",
+      "description": "Code repository webpage (e.g., a GitHub repository)"
+    },
+    "package": {
+      "type": "array",
+      "description": "Links to the latest package release page(s) (e.g., PyPI project, Docker image, GitHub releases page)",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "programmingLanguage": {
+      "type": "string",
+      "description": "Programming language (from a controlled vocabulary)"
+    },
+    "license": {
+      "type": "string",
+      "description": "Software/Code license (e.g., MIT, Apache, GPL) – from a controlled vocabulary"
+    },
+    "version": {
+      "type": "string",
+      "description": "Software version"
+    },
+    "changeLog": {
+      "type": "string",
+      "description": "Changes in the latest version"
+    },
+    "lastUpdate": {
+      "type": "string",
+      "format": "date",
+      "description": "Latest update date"
+    },
+    "maintainers": {
+      "type": "array",
+      "description": "Maintainer(s): an array of objects with names/affiliations, etc.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "email": {
+      "type": "array",
+      "description": "Maintainer or organization contact email(s)",
+      "items": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "organization": {
+      "type": "string",
+      "description": "Name of the organization (institute, company, university, research group, department, etc.)"
+    },
+    "organizationURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Organization website"
+    },
+    "funding": {
+      "type": "array",
+      "description": "Funding organization(s), program(s), or grant(s) supporting development/maintenance",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "guideline",
+    "documentation",
+    "repository",
+    "package",
+    "programmingLanguage",
+    "license",
+    "version",
+    "changeLog",
+    "lastUpdate",
+    "maintainers",
+    "email"
+  ],
+  "additionalProperties": false
+}
