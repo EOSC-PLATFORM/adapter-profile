@@ -16,15 +16,17 @@
       "type": "string",
       "description": "Description"
     },
-    "guideline": {
-      "type": "string",
-      "description": "EOSC Guideline ID (options given by the Registry)"
-    },
-    "service": {
-      "type": "array",
-      "description": "EOSC Service ID (options given by the Registry)",
-      "items": {
-        "type": "string"
+    "linkedResource": {
+      "type": "object",
+      "description": "EOSC Guideline or Service ID",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["guideline","service"]
+        },
+        "id": {
+          "type": "string"
+        }
       }
     },
     "tagline": {
@@ -110,7 +112,7 @@
     "id",
     "name",
     "description",
-    "guideline",
+    "linkedResource",
     "documentation",
     "repository",
     "package",
