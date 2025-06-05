@@ -1,126 +1,157 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/adapter.schema.json",
-  "title": "Adapter Schema",
+
+  "title": "Adapter Profile",
+  "description": "Schema for Adapter EOSC Resource",
+
+  "$defs": {
+    "LinkedResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+
   "type": "object",
   "properties": {
-    "id": {
-      "type": "string",
-      "description": "Unique ID (automatically given)"
-    },
-    "name": {
-      "type": "string",
-      "description": "Unique name"
-    },
-    "description": {
-      "type": "string",
-      "description": "Description"
-    },
-    "guideline": {
-      "type": "string",
-      "description": "EOSC Guideline ID (options given by the Registry)"
-    },
-    "service": {
+    "admins": {
+      "description": "List of users that are admins of the adapter",
+      "required": true,
       "type": "array",
-      "description": "EOSC Service ID (options given by the Registry)",
       "items": {
-        "type": "string"
+        "$ref": "#/$defs/User",
+        "minItems": 1
       }
     },
-    "tagline": {
-      "type": "string",
-      "description": "Short catch-phrase"
+
+    "catalogueId": {
+      "description": "The ID of the catalogue this adapter originates from",
+      "required": true,
+      "type": "string"
     },
-    "logo": {
-      "type": "string",
-      "description": "logo (image) – could be a URL or base64-encoded string"
+
+    "changeLog": {
+      "description": "Changes in the last version",
+      "required": false,
+      "type": "string"
     },
+
+    "description": {
+      "description": "Description of the adapter",
+      "required": true,
+      "type": "string"
+    },
+
     "documentation": {
+      "description": "Link to the documentation",
+      "required": true,
       "type": "string",
-      "format": "uri",
-      "description": "Documentation webpage (e.g., read-the-docs page)"
+      "format": "uri"
     },
-    "repository": {
+
+    "id": {
+      "description": "Unique identifier in the original catalogue",
+      "required": true,
+      "type": "string"
+    },
+
+    "lastUpdate": {
+      "description": "Last update of the adapter catalogue record",
+      "required": true,
       "type": "string",
-      "format": "uri",
-      "description": "Code repository webpage (e.g., a GitHub repository)"
+      "format": "date-time"
     },
-    "package": {
+
+    "license": {
+      "description": "Adapter's source-code license",
+      "required": true,
+      "type": "string"
+    },
+
+    "linkedResource": {
+      "description": "Reference to service or guideline this adapter supports",
+      "required": true,
+      "type": "string"
+    },
+
+    "logo": {
+      "description": "Link to a logo image",
+      "required": false,
+      "type": "string",
+      "format": "uri"
+    },
+
+    "name": {
+      "description": "Name of the adapter",
+      "required": true,
+      "type": "string"
+    },
+
+    "node": {
+      "type": "string",
+      "description": "TODO: clarify the format of this field"
+    },
+
+    "programmingLanguage": {
+      "description": "Programming language adapter is written in",
+      "required": false,
+      "type": "string"
+    },
+
+    "releases": {
+      "description": "List of releases of the adapter packages",
+      "required": false,
       "type": "array",
-      "description": "Links to the latest package release page(s) (e.g., PyPI project, Docker image, GitHub releases page)",
       "items": {
         "type": "string",
         "format": "uri"
       }
     },
-    "programmingLanguage": {
+
+    "repository": {
+      "description": "Link to the source code repository",
+      "required": true,
       "type": "string",
-      "description": "Programming language (from a controlled vocabulary)"
+      "format": "uri"
     },
-    "license": {
-      "type": "string",
-      "description": "Software/Code license (e.g., MIT, Apache, GPL) – from a controlled vocabulary"
+
+    "tagline": {
+      "description": "Short description of the adapter",
+      "required": false,
+      "type": "string"
     },
+
     "version": {
-      "type": "string",
-      "description": "Software version"
-    },
-    "changeLog": {
-      "type": "string",
-      "description": "Changes in the latest version"
-    },
-    "lastUpdate": {
-      "type": "string",
-      "format": "date",
-      "description": "Latest update date"
-    },
-    "maintainers": {
-      "type": "array",
-      "description": "Maintainer(s): an array of objects with names/affiliations, etc.",
-      "items": {
-        "type": "object"
-      }
-    },
-    "email": {
-      "type": "array",
-      "description": "Maintainer or organization contact email(s)",
-      "items": {
-        "type": "string",
-        "format": "email"
-      }
-    },
-    "organization": {
-      "type": "string",
-      "description": "Name of the organization (institute, company, university, research group, department, etc.)"
-    },
-    "organizationURL": {
-      "type": "string",
-      "format": "uri",
-      "description": "Organization website"
-    },
-    "funding": {
-      "type": "array",
-      "description": "Funding organization(s), program(s), or grant(s) supporting development/maintenance",
-      "items": {
-        "type": "string"
-      }
+      "description": "Version of the adapter",
+      "required": false,
+      "type": "string"
     }
   },
-  "required": [
-    "id",
-    "name",
-    "description",
-    "guideline",
-    "documentation",
-    "repository",
-    "package",
-    "programmingLanguage",
-    "license",
-    "version",
-    "changeLog",
-    "lastUpdate",
-    "maintainers",
-    "email"
-  ],
+
   "additionalProperties": false
 }
