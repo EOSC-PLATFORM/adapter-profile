@@ -41,7 +41,6 @@
   "properties": {
     "admins": {
       "description": "List of users that are admins of the adapter",
-      "required": true,
       "type": "array",
       "items": {
         "$ref": "#/$defs/User",
@@ -51,81 +50,69 @@
 
     "catalogueId": {
       "description": "The ID of the catalogue this adapter originates from",
-      "required": true,
       "type": "string"
     },
 
     "changeLog": {
       "description": "Changes in the last version",
-      "required": false,
       "type": "string"
     },
 
     "description": {
       "description": "Description of the adapter",
-      "required": true,
       "type": "string"
     },
 
     "documentation": {
       "description": "Link to the documentation",
-      "required": true,
       "type": "string",
       "format": "uri"
     },
 
     "id": {
       "description": "Unique identifier in the original catalogue",
-      "required": true,
       "type": "string"
     },
 
     "lastUpdate": {
       "description": "Last update of the adapter catalogue record",
-      "required": true,
       "type": "string",
       "format": "date-time"
     },
 
     "license": {
       "description": "Adapter's source-code license",
-      "required": true,
       "type": "string"
     },
 
     "linkedResource": {
       "description": "Reference to service or guideline this adapter supports",
-      "required": true,
       "type": "string"
     },
 
     "logo": {
       "description": "Link to a logo image",
-      "required": false,
       "type": "string",
       "format": "uri"
     },
 
     "name": {
       "description": "Name of the adapter",
-      "required": true,
       "type": "string"
     },
 
     "node": {
-      "type": "string",
-      "description": "TODO: clarify the format of this field"
+      "description": "TODO: clarify the format of this field",
+      "type": "string"
     },
 
     "programmingLanguage": {
       "description": "Programming language adapter is written in",
-      "required": false,
       "type": "string"
     },
 
     "releases": {
       "description": "List of releases of the adapter packages",
-      "required": false,
       "type": "array",
       "items": {
         "type": "string",
@@ -135,23 +122,34 @@
 
     "repository": {
       "description": "Link to the source code repository",
-      "required": true,
       "type": "string",
       "format": "uri"
     },
 
     "tagline": {
       "description": "Short description of the adapter",
-      "required": false,
       "type": "string"
     },
 
     "version": {
       "description": "Version of the adapter",
-      "required": false,
       "type": "string"
     }
   },
+
+  "required": [
+    "admins",
+    "catalogueId",
+    "description",
+    "documentation",
+    "id",
+    "lastUpdate",
+    "license",
+    "linkedResource",
+    "name",
+    "node",
+    "repository"
+  ],
 
   "additionalProperties": false
 }
