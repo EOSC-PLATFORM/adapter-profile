@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Adapter Profile",
   "description": "Schema for Adapter EOSC Resource (Adapter profile for EOSC Registry).",
+
   "$defs": {
     "LinkedResource": {
       "type": "object",
@@ -10,7 +11,7 @@
         "resourceType": {
           "type": "string",
           "description": "Type of resource linked.",
-          "examples": ["EOSC Service", "EOSC Interoperability Guideline"]
+          "enum": ["EOSC Service", "EOSC Interoperability Guideline"]
         },
         "resourceID": {
           "type": "string",
@@ -20,235 +21,185 @@
       "required": ["resourceType", "resourceID"],
       "additionalProperties": false
     },
-    "User": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "id": {
-          "type": "string",
-          "description": "Unique user id (internal)"
-        },
-        "name": {
-          "type": "string"
-        },
-        "surname": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
+
     "Creator": {
       "type": "object",
       "description": "A person or legal entity responsible for producing the adapter/artifact.",
       "properties": {
-        "lastName": {
+        "nameFirst": {
           "type": "string",
-          "description": "Full name, recommended format: 'Surname, Name'."
+          "description": "The full name of the creator. Recommended format: 'Surname, Name'."
         },
-        "firstName": {
+        "nameLast": {
           "type": "string",
-          "description": "Full name, recommended format: 'Surname, Name'."
+          "description": "The full name of the creator. Recommended format: 'Surname, Name'."
         },
         "role": {
           "type": "string",
-          "description": "Role of the creator (use Credit vocabulary where possible)."
+          "description": "The role of the creator (use CRediT vocabulary where possible)."
         },
         "PIDSchema": {
           "type": "string",
-          "description": "PID schema used for creator identifier (e.g. ORCID)."
+          "description": "PID schema used for creator identifier (e.g. ORCID, ROR.org)."
         },
         "PID": {
           "type": "string",
-          "description": "Creator identifier according to the chosen PID schema."
+          "description": "Uniquely identifies an individual or legal entity, according to the chosen PID schema."
         },
         "affiliationName": {
           "type": "string",
-          "description": "Organizational or institutional affiliation of the creator."
+          "description": "The organizational or institutional affiliation of the creator."
         },
         "affiliationIdentifier": {
           "type": "string",
-          "description": "Identifier for the affiliation (e.g. ROR.org, ISNI, Wikidata)."
+          "description": "Uniquely identifies the organizational affiliation of the creator (e.g. ROR.org, ISNI, Wikidata)."
         },
         "email": {
           "type": "string",
-          "format": "email"
+          "format": "email",
+          "description": "Email of the creator."
         }
       },
-      "required": ["lastName", "affiliationName"],
+      "required": ["creatorName", "affiliationName"],
       "additionalProperties": false
     },
-    "PackageRelease": {
-      "type": "object",
-      "description": "A package or release artifact for the adapter (e.g. PyPI, Docker image, GitHub release).",
-      "properties": {
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "Link to the package release page or specific release."
-        },
-        "version": {
-          "type": "string",
-          "description": "Release version string."
-        },
-        "packageType": {
-          "type": "string",
-          "description": "Type of package (e.g. PyPI, Docker, GitHub, NPM, etc). Manager, format, or repository."
-        },
-        "notes": {
-          "type": "array",
-          "description": "Optional notes about this release (compatibility, platform constraints).",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "description": "Note type (compatibility, platform, etc.)"
-              },
-              "value": {
-                "type": "string",
-                "description": "Note value."
-              }
-            },
-            "required": ["type", "value"],
-            "additionalProperties": false
-          }
-        }
-      },
-      "required": ["url"],
-      "additionalProperties": false
-    },
+
     "QABadge": {
       "type": "object",
+      "description": "Software quality scores/badges for the adapter.",
       "properties": {
-        "type": {
+        "documentation": {
           "type": "string",
-          "description": "QA badge type (documentation, license, testing, etc.)."
+          "description": "Documentation badge/score."
         },
-        "value": {
+        "license": {
           "type": "string",
-          "description": "Badge or score value."
+          "description": "License badge."
         },
-        "url": {
+        "testing": {
           "type": "string",
-          "format": "uri"
+          "description": "Testing badge/score."
         }
       },
-      "additionalProperties": false,
-      "required": ["type", "value"]
+      "additionalProperties": false
     }
   },
+
   "type": "object",
   "properties": {
-    "admins": {
-      "description": "List of users that are admins of the adapter",
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/User"
-      },
-      "minItems": 1
-    },
     "catalogueId": {
-      "description": "The ID of the catalogue this adapter originates from",
+      "description": "The ID of the catalogue this adapter originates from.",
       "type": "string"
     },
+
     "changeLog": {
-      "description": "Changes in the latest version (short HTML or plain text)",
+      "description": "Changes in the latest version (HTML allowed).",
       "type": "string"
     },
-    "description": {
-      "description": "Long description of the adapter (HTML allowed)",
-      "type": "string"
-    },
-    "documentation": {
-      "description": "Documentation webpage (eg, read-the-docs page)",
-      "type": "string",
-      "format": "uri"
-    },
-    "id": {
-      "description": "Unique resource/entry ID (unique identifier for this adapter record)",
-      "type": "string"
-    },
-    "lastUpdate": {
-      "description": "Latest update date of the adapter catalogue record (ISO 8601 date)",
-      "type": "string",
-      "format": "date"
-    },
-    "license": {
-      "description": "Software/Code license (use SPDX identifiers where possible). See https://spdx.org/licenses/",
-      "type": "string"
-    },
-    "linkedResource": {
-      "description": "EOSC Service or Guideline reference that this adapter supports",
-      "$ref": "#/$defs/LinkedResource"
-    },
-    "logo": {
-      "description": "Logo image link. Accepts PNG or JPEG.",
-      "type": "string",
-      "format": "uri"
-    },
-    "name": {
-      "description": "Adapter name",
-      "type": "string",
-      "maxLength": 50
-    },
-    "node": {
-      "description": "Implementation node or deployment identifier (format TBD)",
-      "type": "string"
-    },
-    "programmingLanguage": {
-      "description": "Programming language (use controlled vocabulary where possible)",
-      "type": "string",
-      "enum": ["Python", "Java", "C++", "R", "JavaScript", "Other"]
-    },
-    "releases": {
-      "description": "List of package releases for the adapter",
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/PackageRelease"
-      },
-      "minItems": 1
-    },
-    "repository": {
-      "description": "Code repository webpage (eg, GitHub repository). Prefer link to specific release or tag.",
-      "type": "string",
-      "format": "uri"
-    },
-    "tagline": {
-      "description": "Short (one-sentence) description",
-      "type": "string",
-      "maxLength": 100
-    },
-    "version": {
-      "description": "Software version of the adapter",
-      "type": "string"
-    },
+
     "creators": {
-      "description": "The main creators/authors involved in producing the adapter.",
+      "description": "The main researchers involved in producing the adapter, or the authors, in priority order.",
       "type": "array",
       "items": {
         "$ref": "#/$defs/Creator"
       },
       "minItems": 1
     },
+
+    "description": {
+      "description": "Long description of the adapter (HTML allowed).",
+      "type": "string",
+      "maxLength": 500
+    },
+
+    "documentation": {
+      "description": "Documentation webpage (e.g., read-the-docs page).",
+      "type": "string",
+      "format": "uri"
+    },
+
+    "id": {
+      "description": "Unique resource/entry ID (unique identifier for this adapter record).",
+      "type": "string"
+    },
+
+    "lastUpdate": {
+      "description": "Latest update date (ISO 8601 date).",
+      "type": "string",
+      "format": "date"
+    },
+
+    "license": {
+      "description": "Software/Code license (e.g., MIT, Apache, GPL). Use SPDX identifiers where possible. See https://spdx.org/licenses/",
+      "type": "string"
+    },
+
+    "linkedResource": {
+      "description": "EOSC Service or Interoperability Guideline reference that this adapter supports. Chosen from a list of guidelines/services in the Registry.",
+      "$ref": "#/$defs/LinkedResource"
+    },
+
+    "logo": {
+      "description": "Logo image link. Accepts PNG or JPEG.",
+      "type": "string",
+      "format": "uri"
+    },
+
+    "name": {
+      "description": "Adapter name.",
+      "type": "string",
+      "maxLength": 50
+    },
+
+    "node": {
+      "description": "Implementation node or deployment identifier (format TBD).",
+      "type": "string"
+    },
+
     "notes": {
-      "description": "Extra notes and QA badges (software quality scores/badges).",
-      "type": "object",
-      "properties": {
-        "qa": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/QABadge"
-          }
-        }
+      "description": "Optional notes and QA software quality scores/badges.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/QABadge"
+      }
+    },
+
+    "package": {
+      "description": "Link(s) to latest package release page (e.g., PyPI project, Docker image, GitHub releases page). May evolve into a list of objects as packages can be platform-dependent.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
       },
-      "additionalProperties": true
+      "minItems": 1
+    },
+
+    "programmingLanguage": {
+      "description": "Programming language the adapter is written in (use controlled vocabulary where possible).",
+      "type": "string"
+    },
+
+    "softwareRepository": {
+      "description": "Code repository webpage (e.g., GitHub repository). Should be a link to a specific version of the repository according to 'version', e.g. release that has been checked before approval.",
+      "type": "string",
+      "format": "uri"
+    },
+
+    "tagline": {
+      "description": "Short (one-sentence) description.",
+      "type": "string",
+      "maxLength": 100
+    },
+
+    "version": {
+      "description": "Software version of the adapter.",
+      "type": "string"
     }
   },
+
   "required": [
     "catalogueId",
+    "changeLog",
     "creators",
     "description",
     "documentation",
@@ -258,7 +209,11 @@
     "linkedResource",
     "name",
     "node",
-    "repository"
+    "package",
+    "programmingLanguage",
+    "softwareRepository",
+    "version"
   ],
+
   "additionalProperties": false
 }
